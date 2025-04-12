@@ -1,0 +1,42 @@
+{
+  "name": "doaki-backend",
+  "version": "1.0.0",
+  "description": "A backend server to doaki app",
+  "homepage": "https://github.com/DOAKI-ONG/doaki-backend#readme",
+  "bugs": {
+    "url": "https://github.com/DOAKI-ONG/doaki-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DOAKI-ONG/doaki-backend.git"
+  },
+  "license": "ISC",
+  "author": "ThulioBezerra and Bealvs",
+  "type": "commonjs",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src",
+    "start:swagger": "ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.24.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "prettier": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/morgan": "^1.9.9",
+    "prisma": "^6.6.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
