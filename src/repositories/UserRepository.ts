@@ -1,7 +1,7 @@
 import { prisma } from "../lib/prisma";
 export default class UserRepository {
-  static create(user: { name: string; email: string; password: string }) {
-    const userExist = prisma.user.findFirst({
+  static async create(user: { name: string; email: string; password: string }) {
+    const userExist = await prisma.user.findFirst({
       where: {
         email: user.email,
       },
@@ -9,7 +9,7 @@ export default class UserRepository {
     if (userExist) {
       throw new Error("Usuário já existe");
     }
-    return prisma.user.create({
+    return await prisma.user.create({
       data: user,
     });
   }
