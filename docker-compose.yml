@@ -3,15 +3,15 @@ services:
     build: .
     ports:
       - "3000:3000"
+    depends_on:
+      - postgres
     environment:
+      DATABASE_URL: postgresql://postgres:root@postgres:5432/doakiDB
+      FRONTEND_URL: http://localhost:3000
+      PGPASSWORD: root
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: doakiDB
-      POSTGRES_HOST: postgres
-    depends_on:
-      - postgres
-    command: ["npx", "tsx", "watch", "src/server.ts"]
-
   postgres:
     image: postgres:17
     environment:
