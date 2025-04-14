@@ -13,7 +13,9 @@
         "strictNullChecks": true,
         "paths": {
             "@components/*": ["src/components/*"],
-            "@utils/*": ["src/utils/*"]
+            "@utils/*": ["src/utils/*"],
+            "@repositories/*": ["src/repositories/*"],
+            "@controllers/*": ["src/controllers/*"]
         },
         "rootDir": "./src"
     },
