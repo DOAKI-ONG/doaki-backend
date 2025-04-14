@@ -9,7 +9,8 @@ export default class UserController {
   static async registerUser(req: Request, res: Response) {
     const registerUserSchema = z
       .object({
-        name: z.string(),
+        first_name: z.string(),
+        last_name: z.string(),
         email: z.string().email("Email com formato inválido"),
         password: z
           .string()
@@ -20,24 +21,32 @@ export default class UserController {
         message: "As senhas divergem",
         path: ["confirm_password"],
       });
-    const { name, email, password } = registerUserSchema.parse(req.body);
     try {
+      const { first_name, last_name, email, password } = registerUserSchema.parse(req.body);
+      const name = `${first_name} ${last_name}`;
       await UserRepository.create({
         name,
         email,
         password,
       });
+      return res.status(201).json({
+        message: "Usuário criado com sucesso",
+      });
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          message: "Erro de validação dos dados",
+          errors: error.errors,
+        });
+      }
       if (error instanceof Error) {
-        if (error.message === "Usuário já existe") {
-          return res.status(409).json({
-            message: error.message,
-          });
-        }
+        return res.status(409).json({
+          message: error.message,
+        });
       }
     }
-    return res.status(201).json({
-      message: "Usuário criado com sucesso",
+    return res.status(500).json({
+      message: "Erro interno do servidor",
     });
   }
 }

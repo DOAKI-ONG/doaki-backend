@@ -7,7 +7,7 @@ export default class UserRepository {
       },
     });
     if (userExist) {
-      throw new Error("Usuário já existe");
+      throw new Error("Email já cadastrado");
     }
     return await prisma.user.create({
       data: user,
