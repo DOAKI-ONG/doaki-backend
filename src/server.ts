@@ -9,11 +9,9 @@ const app = express();
 
 app.use(express.json());
 
-const FRONTEND_URL = process.env.FRONTEND_URL || ""
-const GERENCIADOR_URL = process.env.GERENCIADOR_URL || ""
-
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 app.use(cors({
-    origin: [FRONTEND_URL, GERENCIADOR_URL],
+    origin: [FRONTEND_URL],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, 
 }));
