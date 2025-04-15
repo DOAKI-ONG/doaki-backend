@@ -12,6 +12,7 @@ export default class UserController {
         first_name: z.string(),
         last_name: z.string(),
         email: z.string().email("Email com formato inválido"),
+        confirm_email: z.string().email("Email com formato inválido"),
         password: z
           .string()
           .min(8, "A senha deve conter pelo menos 8 caracteres"),
@@ -20,6 +21,10 @@ export default class UserController {
       .refine((data) => data.password === data.confirm_password, {
         message: "As senhas divergem",
         path: ["confirm_password"],
+      })
+      .refine((data) => data.email === data.confirm_email, {
+        message: "Os emails divergem",
+        path: ["confirm_email"],
       });
     try {
       const { first_name, last_name, email, password } = registerUserSchema.parse(req.body);
