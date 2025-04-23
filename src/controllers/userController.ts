@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import z from "zod";
 import UserRepository from "../repositories/UserRepository";
 import jsonwebtoken from "jsonwebtoken";
-import { findUserByEmail } from "../models/User";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -23,7 +22,7 @@ export default class UserController {
       }
     }
     const { email, password } = req.body;
-    const userExists = await findUserByEmail(email);
+    const userExists = await UserRepository.findByEmail(email);
     if (!userExists) {
       return res.status(404).json({
         message: "Usuário não encontrado",
@@ -43,12 +42,12 @@ export default class UserController {
         expiresIn: "12h",
       }
     );
-    console.log(token);
     return res.status(201).json({
       message: "Usuário logado com sucesso",
       token: token,
     });
   }
+
   static async registerUser(req: Request, res: Response) {
     const registerUserSchema = z
       .object({
@@ -77,6 +76,7 @@ export default class UserController {
         name,
         email,
         password,
+        type: "CLIENT",
       });
       return res.status(201).json({
         message: "Usuário criado com sucesso",
@@ -97,5 +97,31 @@ export default class UserController {
     return res.status(500).json({
       message: "Erro interno do servidor",
     });
+  }
+  static async getUserById(req: Request, res: Response) {
+    const { id } = res.locals.id;
+    try {
+      const user = await UserRepository.findById(id);
+      if (!user) {
+        return res.status(404).json({
+          message: "Usuário não encontrado",
+        });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({
+        message: "Erro interno do servidor",
+      });
+    }
+  }
+  static async getAllUsers(req: Request, res: Response) {
+    try {
+      const users = await UserRepository.findAll();
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(500).json({
+        message: "Erro interno do servidor",
+      });
+    }
   }
 }
