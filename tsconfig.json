@@ -15,7 +15,8 @@
             "@components/*": ["src/components/*"],
             "@utils/*": ["src/utils/*"],
             "@repositories/*": ["src/repositories/*"],
-            "@controllers/*": ["src/controllers/*"]
+            "@controllers/*": ["src/controllers/*"],
+            "@middlewares/*": ["src/middlewares/*"],
         },
         "rootDir": "./src"
     },
