@@ -8,20 +8,65 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id_user        String    @id @default(cuid())
   name      String
-  email     String   @unique
-  cpf       String?  @unique
-  cnpj      String?  @unique
+  email     String    @unique
+  cpf       String?   @unique
+  phone     String?
+  address   String?
   password  String
   type      Perfil
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+  donation  Donation[]
+  ong       Ong?
+}
+
+model Ong {
+  id_ong    String     @id @default(cuid())
+  id_user_fk String? @unique
+  name      String
+  email     String     @unique
+  phone     String?
+  user      User?      @relation(fields: [id_user_fk], references: [id_user], onDelete: Cascade)
+  cnpj      String?    @unique
+  context   OngType
+  address   String
+  status    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?  @updatedAt
+  donation  Donation[]
 }
 
 
+model Donation {
+  id        String    @id @default(cuid())
+  userId    String
+  ongId     String
+  amount    Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  user      User      @relation(fields: [userId], references: [id_user])
+  ong       Ong      @relation(fields: [ongId], references: [id_ong])
+}
+
 enum Perfil {
   ADMIN
-  ONG
-  CLIENT
+  DONATOR
+  ADMIN_ONG
+}
+
+enum OngType {
+  ALIMENTOS
+  UTENSILIOS_ADERECOS
+  ANIMAIS
+  SAUDE
+  MORADIA
+  TRANSPORTE
+  EDUCACAO
+  OUTROS
 }

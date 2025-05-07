@@ -22,7 +22,7 @@
     },
     "include": [
         "src/**/*.ts"
-    ],
+, "src/routes/private/OngPrivateRoute.ts"    ],
     "exclude": [
         "src/**/*.spec.ts",
         "node_modules"

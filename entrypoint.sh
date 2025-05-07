@@ -1,7 +1,7 @@
 echo "⏳ Aguardando o banco de dados ficar disponível..."
 until pg_isready -h postgres -p 5432 -U postgres; do
-  echo "❌ Banco de dados ainda não está disponível. Tentando novamente em 3 segundos..."
-  sleep 3
+  echo "❌ Banco de dados ainda não está disponível. Tentando novamente em 1 segundos..."
+  sleep 1
 done
 echo "✅ Banco de dados disponível!"
 
