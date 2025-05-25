@@ -1,46 +1,50 @@
 import { Perfil } from "@prisma/client";
 import { prisma } from "../lib/prisma";
-import { UserUpdate } from "src/types/user.types";
+import { UserNotFoundError } from "@helpers/user-errors/404/userNotFoundError";
+import { UserAlreadyExistsError } from "@helpers/user-errors/409/userAlreadyExistsError";
+import { User } from "@prisma/client";
+
 export default class UserRepository {
-  static async create(user: { name: string; email: string; password: string ; type: Perfil}) {
+  static async create(user: {
+    name: string;
+    email: string;
+    password: string;
+    cpf: string;
+    type: Perfil;
+  }): Promise<User> {
     const userExist = await prisma.user.findFirst({
       where: {
         email: user.email,
       },
     });
-    if (userExist) {
-      throw new Error("Email já cadastrado");
+    if (!userExist) {
+      return await prisma.user.create({
+        data: user,
+      });
     }
-    return await prisma.user.create({
-      data: user,
-    });
+    throw new UserAlreadyExistsError();
   }
   static async findByEmail(email: string) {
-    return await prisma.user.findFirst({
-      select: {
-        password: true,
-        id_user: true,
-        status: true,
-      },
+    const user = await prisma.user.findFirst({
       where: {
         email,
       },
     });
+    if (!user) {
+      throw new UserNotFoundError();
+    }
+    return user;
   }
   static async findById(id: string) {
-    return await prisma.user.findFirst({
-      select: {
-        id_user: true,
-        name: true,
-        email: true,
-        type: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+    const user = await prisma.user.findFirst({
       where: {
         id_user: id,
       },
     });
+    if (!user) {
+      throw new UserNotFoundError();
+    }
+    return user;
   }
   static async findAll() {
     return await prisma.user.findMany({
@@ -50,27 +54,6 @@ export default class UserRepository {
         email: true,
         createdAt: true,
         updatedAt: true,
-      },
-    });
-  }
-  static async delete(id: string) {
-    return await prisma.user.update({
-      where: {
-        id_user: id,  
-      },
-      data: {
-        status: false,
-      },
-    });
-  }
-  static async update(id: string, user: UserUpdate) {
-    return await prisma.user.update({
-      where: {
-        id_user: id,
-      },
-      data: {
-        phone: user.phone,
-        email: user.email,
       },
     });
   }
