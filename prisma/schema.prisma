@@ -9,6 +9,7 @@ datasource db {
 
 model User {
   id_user        String    @id @default(cuid())
+  profileImage String? @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
   name      String
   email     String    @unique
   cpf       String?   @unique
@@ -27,13 +28,20 @@ model User {
 model Ong {
   id_ong    String     @id @default(cuid())
   id_user_fk String? @unique
+  profileImage String? @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
   name      String
   email     String     @unique
+  description String?
   phone     String?
-  user      User?      @relation(fields: [id_user_fk], references: [id_user], onDelete: Cascade)
   cnpj      String?    @unique
-  context   OngType
+  accessToken String? @unique
+  active Boolean @default(true)
+  publicKey String?
+  refreshToken String?
+  expiresIn Int?
   address   String
+  user      User?      @relation(fields: [id_user_fk], references: [id_user], onDelete: Cascade)
+  context   OngType
   status    Boolean    @default(true)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -70,3 +78,4 @@ enum OngType {
   EDUCACAO
   OUTROS
 }
+
