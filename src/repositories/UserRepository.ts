@@ -24,7 +24,7 @@ export default class UserRepository {
     }
     throw new UserAlreadyExistsError();
   }
-  static async findByEmail(email: string) {
+  static async findByEmail(email: string) : Promise<User> {
     const user = await prisma.user.findFirst({
       where: {
         email,

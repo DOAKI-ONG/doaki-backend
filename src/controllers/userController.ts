@@ -3,17 +3,17 @@ import UserRepository from "../repositories/UserRepository";
 import jsonwebtoken from "jsonwebtoken";
 import dotenv from "dotenv";
 import { UserLogin, UserRegister } from "src/types/user.types";
-import { UserNotFoundError } from "@helpers/user-errors/404/userNotFoundError";
 import { checkPassword } from "@services/users/checkPassword";
-import { PasswordNotMatchError } from "@helpers/user-errors/400/passwordNotMatchError";
+import { WrongPasswordError } from "@helpers/user-errors/400/wrongPasswordError";
+import { encryptPassword } from "@services/users/encryptPassword";
 
 dotenv.config();
-export default class UserController {
-  static async loginUser(body: UserLogin, res: Response) {
+const  UserController =  {
+  loginUser: async (body: UserLogin, res: Response) =>{
     const { email, password } = body;
     const userExists = await UserRepository.findByEmail(email);
     if (!(await (checkPassword(password, userExists.password)))) {
-     throw new PasswordNotMatchError();
+     throw new WrongPasswordError();
     }
     const token = jsonwebtoken.sign(
       {
@@ -28,30 +28,33 @@ export default class UserController {
       message: "Usuário logado com sucesso",
       token: token,
     });
-  }
+  },
 
-  static async registerUser(body: UserRegister, res: Response) {
+  registerUser: async (body: UserRegister, res: Response) =>{
     const { name, email, password, cpf } = body;
+    const hashedPassword = await encryptPassword(password);
     await UserRepository.create({
       name,
       email,
-      password,
+      password: hashedPassword,
       cpf,
       type: "DONATOR",
     });
     return res.status(201).json({
       message: "Usuário cadastrado com sucesso",
     });
-  }
-  static async getUserById(req: Request, res: Response) {
+  },
+  getUserById: async (req: Request, res: Response) => {
     const { id } = res.locals.id;
     const user = await UserRepository.findById(id);
     return res.status(200).json({
       user: { name: user.name, email: user.email, phone: user.phone },
     });
-  }
-  static async getAllUsers(req: Request, res: Response) {
+  },
+  getAllUsers: async (req: Request, res: Response)=> {
     const users = await UserRepository.findAll();
     return res.status(200).json(users);
   }
 }
+
+export default UserController;

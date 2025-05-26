@@ -6,9 +6,9 @@ export const registerUserSchema = z
     name: z.string().min(1, "Name is required"),
     cpf: z.string().min(1, "CPF is required"),
     email: z.string().min(1, "Email is required").email("Incorrect format for email"),
-    confirm_email: z.string().min(1, "Confirm email is required").email("Incorrect format for email"),
-    password: z.string().min(8, "Password with lenght 8 is required"),
-    confirm_password: z.string().min(1, "Confirm password with lenght 8 is required"),
+    confirm_email: z.string().min(1, "Confirm email is required").email("Incorrect format for confirm email"),
+    password: z.string().min(1,"Password is required").min(8, "Password with lenght 8 is required"),
+    confirm_password: z.string().min(1, "Confirm password is required").min(8, "Confirm password with lenght 8 is required"),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: "Mismatched password",
