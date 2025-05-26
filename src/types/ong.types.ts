@@ -17,6 +17,7 @@ export type OngRegister = {
     cnpj: string;
     context: OngType;
     address: string;
+    description: string;
     email: string;
     name: string;
     phone: string;
