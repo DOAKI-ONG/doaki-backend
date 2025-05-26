@@ -39,6 +39,10 @@ export default class OngRepository {
   static async findAllActive() {
     const ongs =  await prisma.ong.findMany({
       select: {
+        id_ong: true,
+        context: true,
+        createdAt: true,
+        updatedAt: true,
         name: true,
         email: true,
         address: true,
@@ -46,6 +50,24 @@ export default class OngRepository {
         cnpj: true,
         profileImage: true,
         description: true,
+      },
+    });
+    if (!ongs) {
+      throw new OngNotFoundError();
+    }
+    return ongs
+  }
+  static async findAllActiveForUsers() {
+    const ongs =  await prisma.ong.findMany({
+      select: {
+        name: true,
+        email: true,
+        address: true,
+        phone: true,
+        cnpj: true,
+        profileImage: true,
+        description: true,
+        context: true,
       },
       where: {
         status: true,

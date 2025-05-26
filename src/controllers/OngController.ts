@@ -48,6 +48,10 @@ export default class OngController {
     const ongs = await OngRepository.findAllActive();
     return res.status(200).json(ongs);
   }
+  static async getAllOngsForUsers(res: Response) {
+    const ongs = await OngRepository.findAllActiveForUsers();
+    return res.status(200).json(ongs);
+  }
   static async deleteOng(req: Request, res: Response) {
     const { ong_id } = req.params;
     await OngRepository.delete(ong_id);

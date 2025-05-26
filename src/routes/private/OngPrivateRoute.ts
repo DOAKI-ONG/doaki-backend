@@ -34,6 +34,13 @@ OngPrivateRoutes.get(
     await OngController.getAllOngs(req, res);
   }
 );
+OngPrivateRoutes.get(
+  "/users/getAll/",
+  checkToken,
+  async (req: Request, res: Response) => {
+    await OngController.getAllOngsForUsers(res);
+  }
+);
 OngPrivateRoutes.delete(
   "/delete/:ong_id",
   checkToken,
