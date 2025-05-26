@@ -17,6 +17,11 @@
             "@repositories/*": ["src/repositories/*"],
             "@controllers/*": ["src/controllers/*"],
             "@middlewares/*": ["src/middlewares/*"],
+            "@lib/*": ["src/lib/*"],
+            "@helpers/*": ["src/helpers/*"],
+            "@routes/*": ["src/routes/*"],
+            "@schemas/*": ["src/schemas/*"],
+            "@services/*": ["src/services/*"],
         },
         "rootDir": "./src"
     },

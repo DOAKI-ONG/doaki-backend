@@ -21,8 +21,7 @@ A arquitetura do backend foi baseada em um modelo **MVC aprimorado**, com a incl
 │   ├── middlewares/          # Middlewares como autenticação, validações, etc.
 │   ├── repositories/         # Acesso a dados, abstração sobre Prisma
 │   ├── routes/               # Definição das rotas da API
-│   ├── lib/                  # Bibliotecas utilitárias e funções auxiliares
-│   └── generated/            # Código gerado automaticamente (ex: Prisma client)
+│   └── lib/                  # Bibliotecas utilitárias e funções auxiliares
 │
 ├── server.ts                 # Arquivo principal de inicialização da aplicação
 ├── entrypoint.sh             # Script de inicialização usado no Docker
