@@ -1,6 +1,6 @@
 import { OngAlreadyExistError } from "@helpers/ong-errors/409/OngAlreadyExist";
 import { prisma } from "../lib/prisma";
-import { OngRegister } from "src/types/ong.types";
+import { OngRegister, OngUpdate } from "src/types/ong.types";
 import { OngNotFoundError } from "@helpers/ong-errors/404/ongNotFound";
 
 export default class OngRepository {
@@ -72,6 +72,22 @@ export default class OngRepository {
       data: {
         status: false,
       },
+    });
+  }
+  static async update(id: string, ong: OngUpdate) {
+    const ongExists = await prisma.ong.findFirst({
+      where: {
+        id_ong: id,
+      },
+    });
+    if (!ongExists) {
+      throw new OngNotFoundError();
+    }
+    return await prisma.ong.update({
+      where: {
+        id_ong: id,
+      },
+      data: ong,
     });
   }
 }

@@ -22,6 +22,12 @@ export type OngRegister = {
     name: string;
     phone: string;
     id_user_fk: string;
+    profileImage: string;
+    accessToken: string;
+    publicKey: string;
+    refreshToken: string;
+    expiresIn: number;
+
 };
 export type OngUpdate = {
     cnpj?: string;

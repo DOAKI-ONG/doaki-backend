@@ -1,14 +1,25 @@
 import { Request, Response } from "express";
-import z from "zod";
-import { OngType } from "@prisma/client";
 import dotenv from "dotenv";
 import OngRepository from "@repositories/OngRepository";
-import { OngRegister } from "src/types/ong.types";
+import { OngRegister, OngUpdate } from "src/types/ong.types";
 
 dotenv.config();
 export default class OngController {
   static async registerOng(body: OngRegister, res: Response) {
-    const { cnpj, context, address, name, email, phone, description} = body;
+    const {
+      cnpj,
+      context,
+      address,
+      name,
+      email,
+      phone,
+      description,
+      expiresIn,
+      profileImage,
+      accessToken,
+      publicKey,
+      refreshToken,
+    } = body;
     const ong = await OngRepository.create({
       name,
       email,
@@ -17,6 +28,11 @@ export default class OngController {
       address,
       phone,
       description,
+      expiresIn,
+      profileImage,
+      accessToken,
+      publicKey,
+      refreshToken,
       id_user_fk: res.locals.id,
     });
     return res.status(201).json({
@@ -37,6 +53,13 @@ export default class OngController {
     await OngRepository.delete(ong_id);
     return res.status(200).json({
       message: "Ong deletada com sucesso",
+    });
+  }
+  static async editOng(body: OngUpdate, req: Request, res: Response) {
+    const { ong_id } = req.params;
+    await OngRepository.update(ong_id, body);
+    return res.status(200).json({
+      message: "Ong editada com sucesso",
     });
   }
 }
