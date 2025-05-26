@@ -6,6 +6,7 @@ import { UserLogin, UserRegister } from "src/types/user.types";
 import { checkPassword } from "@services/users/checkPassword";
 import { WrongPasswordError } from "@helpers/user-errors/400/wrongPasswordError";
 import { encryptPassword } from "@services/users/encryptPassword";
+import { User } from "@prisma/client";
 
 dotenv.config();
 const  UserController =  {
@@ -54,6 +55,22 @@ const  UserController =  {
   getAllUsers: async (req: Request, res: Response)=> {
     const users = await UserRepository.findAll();
     return res.status(200).json(users);
+  },
+  deleteUser: async (req: Request, res: Response) => {
+    const id = res.locals.id;
+    await UserRepository.delete(id);
+    return res.status(200).json({
+      message: "Usuário deletado com sucesso",
+    });
+  },
+  editUser: async (body: Partial<User>, res: Response) => {
+    const id = res.locals.id;
+    const user = await UserRepository.findById(id);
+    await UserRepository.update(id, user);
+    return res.status(200).json({
+      message: "Usuário atualizado com sucesso",
+      user: { name: user.name, email: user.email, phone: user.phone },
+    });
   }
 }
 

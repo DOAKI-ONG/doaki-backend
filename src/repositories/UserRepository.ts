@@ -57,4 +57,40 @@ export default class UserRepository {
       },
     });
   }
+  static async delete(id: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id_user: id,
+      },
+    });
+    if (!user) {
+      throw new UserNotFoundError();
+    }
+    console.log("Deleting user with id:", id);
+    return await prisma.user.update({
+      where: {
+        id_user: id,
+      },
+      data: {
+        deletedAt: new Date(),
+        status: false,
+      },
+    });
+  }
+  static async update(id: string, data: Partial<User>) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id_user: id,
+      },
+    });
+    if (!user) {
+      throw new UserNotFoundError();
+    }
+    return await prisma.user.update({
+      where: {
+        id_user: id,
+      },
+      data,
+    });
+  }
 }
