@@ -8,7 +8,7 @@ import { OngRegister } from "src/types/ong.types";
 dotenv.config();
 export default class OngController {
   static async registerOng(body: OngRegister, res: Response) {
-    const { cnpj, context, address, name, email, phone } = body;
+    const { cnpj, context, address, name, email, phone, description} = body;
     const ong = await OngRepository.create({
       name,
       email,
@@ -16,6 +16,7 @@ export default class OngController {
       context,
       address,
       phone,
+      description,
       id_user_fk: res.locals.id,
     });
     return res.status(201).json({
@@ -28,7 +29,7 @@ export default class OngController {
     return res.status(200).json(ong);
   }
   static async getAllOngs(req: Request, res: Response) {
-    const ongs = await OngRepository.findAll();
+    const ongs = await OngRepository.findAllActive();
     return res.status(200).json(ongs);
   }
   static async deleteOng(req: Request, res: Response) {

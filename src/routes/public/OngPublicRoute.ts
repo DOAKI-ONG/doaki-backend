@@ -6,8 +6,8 @@ const OngPublicRoutes = express.Router();
 
 //pegar todas as ongs: descrição, nome, telefone, email, cnpj, endereco
 OngPublicRoutes.get(
-  "/ong/getAll",(req: Request, res: Response) => {
-    OngController.getAllOngs(req, res);
+  "/ong/getAll", async (req: Request, res: Response) => {
+    await OngController.getAllOngs(req, res);
   }
 );
 
