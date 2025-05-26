@@ -8,47 +8,45 @@ datasource db {
 }
 
 model User {
-  id_user        String    @id @default(cuid())
-  profileImage String? @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
-  name      String
-  email     String    @unique
-  cpf       String?   @unique
-  phone     String?
-  address   String?
-  password  String
-  type      Perfil
-  status    Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deletedAt DateTime?
-  donation  Donation[]
-  ong       Ong?
+  id_user      String     @id @default(cuid())
+  profileImage String?    @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
+  name         String
+  email        String     @unique
+  cpf          String?    @unique
+  phone        String?
+  address      String?
+  password     String
+  type         Perfil
+  status       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  deletedAt    DateTime?
+  donation     Donation[]
+  ong          Ong?
 }
 
 model Ong {
-  id_ong    String     @id @default(cuid())
-  id_user_fk String? @unique
-  profileImage String? @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
-  name      String
-  email     String     @unique
-  description String?
-  phone     String?
-  cnpj      String?    @unique
-  accessToken String? @unique
-  active Boolean @default(true)
-  publicKey String?
-  refreshToken String?
-  expiresIn Int?
-  address   String
-  user      User?      @relation(fields: [id_user_fk], references: [id_user], onDelete: Cascade)
-  context   OngType
-  status    Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deletedAt DateTime?  @updatedAt
-  donation  Donation[]
+  id_ong       String     @id @default(cuid())
+  id_user_fk   String?    @unique
+  profileImage String     @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
+  name         String
+  email        String     @unique
+  description  String
+  phone        String
+  cnpj         String     @unique
+  accessToken  String     @unique
+  publicKey    String
+  refreshToken String
+  expiresIn    Int
+  address      String
+  user         User?      @relation(fields: [id_user_fk], references: [id_user], onDelete: Cascade)
+  context      OngType
+  status       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  deletedAt    DateTime?  @updatedAt
+  donation     Donation[]
 }
-
 
 model Donation {
   id        String    @id @default(cuid())
@@ -59,7 +57,7 @@ model Donation {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
   user      User      @relation(fields: [userId], references: [id_user])
-  ong       Ong      @relation(fields: [ongId], references: [id_ong])
+  ong       Ong       @relation(fields: [ongId], references: [id_ong])
 }
 
 enum Perfil {
@@ -78,4 +76,3 @@ enum OngType {
   EDUCACAO
   OUTROS
 }
-
