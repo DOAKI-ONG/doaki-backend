@@ -17,5 +17,11 @@ if ! npx prisma migrate deploy; then
   exit 1
 fi
 
+echo "🌱 Rodando seed..."
+if ! npx prisma db seed; then
+  echo "❌ Falha ao rodar seed."
+  exit 1
+fi
+
 echo "🚀 Iniciando o servidor..."
 exec npx tsx watch src/server.ts
