@@ -21,7 +21,6 @@ export type OngRegister = {
     email: string;
     name: string;
     phone: string;
-    id_user_fk: string;
     profileImage: string;
     accessToken: string;
     publicKey: string;

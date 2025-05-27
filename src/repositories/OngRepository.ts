@@ -20,15 +20,23 @@ export default class OngRepository {
   static async findById(id: string) {
     const ong = await prisma.ong.findFirst({
       select: {
-        id_ong: true,
         name: true,
         email: true,
         context: true,
+        description: true,
+        address: true,
+        phone: true,
+        cnpj: true,
+        profileImage: true,
         createdAt: true,
         updatedAt: true,
       },
       where: {
-        id_ong: id,
+        userOngs: {
+          some: {
+            userId: id,
+          },
+        },
       },
     });
     if(!ong) {

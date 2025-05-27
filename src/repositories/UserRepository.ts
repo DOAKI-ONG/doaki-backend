@@ -66,7 +66,6 @@ export default class UserRepository {
     if (!user) {
       throw new UserNotFoundError();
     }
-    console.log("Deleting user with id:", id);
     return await prisma.user.update({
       where: {
         id_user: id,

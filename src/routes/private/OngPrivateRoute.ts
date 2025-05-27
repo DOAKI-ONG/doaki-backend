@@ -21,7 +21,6 @@ OngPrivateRoutes.post(
 OngPrivateRoutes.get(
   "/profile",
   checkToken,
-  verifyAdminUserRole,
   async (req: Request, res: Response) => {
     await OngController.getOngById(req, res);
   }
