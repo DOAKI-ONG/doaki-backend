@@ -7,42 +7,48 @@ async function main() {
       {
         name: "amole",
         cpf: "11240280483",
-        password: "11111111",
+        password:
+          "$2a$12$UJxx481ar3cHPieCdTI8AOjTZLv9tIrpcrumbxbySLrpL5coKyuDq", // 11111111
         email: "thulio@gmail.com",
         type: "ADMIN",
       },
       {
         name: "Maria Silva",
         cpf: "12345678901",
-        password: "senhaMaria123",
+        password:
+          "$2a$12$h.JVsdQupaV9XbLIrnla.ONXeHWnDKFA4WXSvV0aHxwyLsLO3Du8.", // senhaMaria123
         email: "maria.silva@example.com",
         type: "DONATOR",
       },
       {
         name: "João Souza",
         cpf: "98765432100",
-        password: "joaoSenha456",
+        password:
+          "$2a$12$btUXci2S5ZE8567n1zxvtel3g7qrE9osIu0rZKRsaedWaapq7mWpa", // joaoSenha456
         email: "joao.souza@example.com",
         type: "ADMIN_ONG",
       },
       {
         name: "Ana Oliveira",
         cpf: "45678912322",
-        password: "anaOliveira789",
+        password:
+          "$2a$12$ZIqcTuC9yMe.VVa6Q30xV.Y4LT8tNpaSfcL/oqrvt6g0fxUhiA6f2", // anaOliveira789
         email: "ana.oliveira@example.com",
         type: "DONATOR",
       },
       {
         name: "Carlos Pereira",
         cpf: "32165498777",
-        password: "carlosPereira321",
+        password:
+          "$2a$12$QlWPp8ms7XIzKidj2b.fheTdmFFFdOROnnlVkHTKmQnxE4xdN9Nta", // carlosPereira321
         email: "carlos.pereira@example.com",
         type: "ADMIN",
       },
       {
         name: "ONG Esperança",
         cpf: "15975348620",
-        password: "ongEsperanca2024",
+        password:
+          "$2a$12$ief8Fpt67mFYJNTNTV36L.KPp7aBDxN5J3lVIZdOyiP5BVKOYZXzm", // ongEsperanca2024
         email: "contato@ongesperanca.org",
         type: "ADMIN_ONG",
       },
@@ -114,11 +120,19 @@ async function main() {
   });
 
   // 3. Recupera os usuários e ongs que serão relacionados
-  const userJoao = await prisma.user.findUnique({ where: { email: "joao.souza@example.com" } });
-  const userOngEsperanca = await prisma.user.findUnique({ where: { email: "contato@ongesperanca.org" } });
+  const userJoao = await prisma.user.findUnique({
+    where: { email: "joao.souza@example.com" },
+  });
+  const userOngEsperanca = await prisma.user.findUnique({
+    where: { email: "contato@ongesperanca.org" },
+  });
 
-  const ongEsperanca = await prisma.ong.findUnique({ where: { email: "contato@ongesperanca.org" } });
-  const ongVidaNova = await prisma.ong.findUnique({ where: { email: "contato@vidanova.org" } });
+  const ongEsperanca = await prisma.ong.findUnique({
+    where: { email: "contato@ongesperanca.org" },
+  });
+  const ongVidaNova = await prisma.ong.findUnique({
+    where: { email: "contato@vidanova.org" },
+  });
 
   // 4. Criação das relações em userOng
   await prisma.userOng.createMany({
