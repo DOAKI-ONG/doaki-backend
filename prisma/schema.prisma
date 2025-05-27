@@ -22,12 +22,11 @@ model User {
   updatedAt    DateTime   @updatedAt
   deletedAt    DateTime?
   donation     Donation[]
-  ong          Ong?
+  userOngs     UserOng[]
 }
 
 model Ong {
   id_ong       String     @id @default(cuid())
-  id_user_fk   String?    @unique
   profileImage String     @default("https://th.bing.com/th/id/OIP.0uaGrLEY_HxDEyklFhqGXgAAAA?rs=1&pid=ImgDetMain")
   name         String
   email        String     @unique
@@ -39,13 +38,26 @@ model Ong {
   refreshToken String
   expiresIn    Int
   address      String
-  user         User?      @relation(fields: [id_user_fk], references: [id_user], onDelete: Cascade)
   context      OngType
   status       Boolean    @default(true)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   deletedAt    DateTime?  @updatedAt
+  userOngs     UserOng[]
   donation     Donation[]
+}
+
+model UserOng {
+  id        String    @id @default(cuid())
+  userId    String
+  ongId     String
+  joinedAt  DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  status    Boolean   @default(true)
+  user      User      @relation(fields: [userId], references: [id_user])
+  ong       Ong       @relation(fields: [ongId], references: [id_ong])
+  @@unique([userId, ongId])
 }
 
 model Donation {
@@ -69,6 +81,9 @@ enum Perfil {
 enum OngType {
   ALIMENTOS
   UTENSILIOS_ADERECOS
+  DIREITOS_HUMANOS
+  MEIO_AMBIENTE
+  CULTURA
   ANIMAIS
   SAUDE
   MORADIA
