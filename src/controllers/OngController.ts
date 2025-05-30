@@ -33,7 +33,6 @@ export default class OngController {
       accessToken,
       publicKey,
       refreshToken,
-      id_user_fk: res.locals.id,
     });
     return res.status(201).json({
       message: "ONG criado com sucesso",

@@ -24,7 +24,7 @@ export default class UserRepository {
     }
     throw new UserAlreadyExistsError();
   }
-  static async findByEmail(email: string) : Promise<User> {
+  static async findByEmail(email: string): Promise<User> {
     const user = await prisma.user.findFirst({
       where: {
         email,
@@ -66,7 +66,6 @@ export default class UserRepository {
     if (!user) {
       throw new UserNotFoundError();
     }
-    console.log("Deleting user with id:", id);
     return await prisma.user.update({
       where: {
         id_user: id,
