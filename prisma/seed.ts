@@ -1,7 +1,7 @@
 import { prisma } from "../src/lib/prisma";
 
 async function main() {
-  // 1. Criação de usuários
+
   await prisma.user.createMany({
     data: [
       {
