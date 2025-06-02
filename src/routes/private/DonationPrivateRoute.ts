@@ -1,16 +1,31 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { checkToken } from "@middlewares/ensureAuthenticate";
-import { verifyAdminUserRole } from "@middlewares/verifyAdmin";
 import DonationController from "@controllers/DonationController";
+import z from "zod";
+import { paymentSchema } from "@schemas/Payment.schema";
 
 const DonationPrivateRoutes = Router();
 
-//criar doação, passando o id da ong como parametro e montar o body no frontend
 DonationPrivateRoutes.post(
-  "/donation/", (req: Request, res: Response) => {
-    DonationController.createDonation(req, res);
-  })
+  "/ong/:cnpj",
+  checkToken,
+  async (req: Request, res: Response) => {
+    const validatedBody = validateSchema(req, paymentSchema);
+    await DonationController.createDonation(req, res, validatedBody);
+  }
+);
 
-
+function validateSchema(req: Request, schema: z.ZodSchema) {
+  const result = schema.safeParse(req.body);
+  if (!result.success) {
+    if (result.error instanceof z.ZodError) {
+      const errors = result.error.errors[0];
+      console.log("Validation Error:", errors);
+      throw new Error(errors.message); //erro de pagamento body
+    }
+    throw new Error();
+  }
+  return result.data;
+}
 
 export default DonationPrivateRoutes;

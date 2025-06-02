@@ -1,7 +1,6 @@
 import { prisma } from "../src/lib/prisma";
 
 async function main() {
-
   await prisma.user.createMany({
     data: [
       {
@@ -68,10 +67,11 @@ async function main() {
         description: "ONG focada em distribuição de alimentos.",
         email: "contato@ongesperanca.org",
         expiresIn: 1,
-        accessToken: "token1",
-        publicKey: "publicKey1",
+        accessToken:
+          "TEST-3623357814451153-042315-b9859eaa9b4b4af7899c9be2e26a4012-1781626255",
+        publicKey: "TEST-0010af91-2b39-4f60-94c3-0ff946014348",
         refreshToken: "refreshToken1",
-        profileImage: "https://imgur.com/u82U9TP",
+        profileImage: "https://i.imgur.com/8tyK8p2.png",
       },
       {
         name: "ONG Vida Nova",
@@ -82,10 +82,10 @@ async function main() {
         description: "Apoio à educação de crianças carentes.",
         email: "contato@vidanova.org",
         expiresIn: 1,
-        accessToken: "token2",
-        publicKey: "publicKey2",
+        accessToken: "TEST",
+        publicKey: "TEST",
         refreshToken: "refreshToken2",
-        profileImage: "https://imgur.com/u82U9TP",
+        profileImage: "https://i.imgur.com/CklDE4Y.png",
       },
       {
         name: "ONG Saúde para Todos",
@@ -96,10 +96,10 @@ async function main() {
         description: "Atendimento médico gratuito.",
         email: "contato@saudeparatodos.org",
         expiresIn: 1,
-        accessToken: "token3",
-        publicKey: "publicKey3",
+        accessToken: "TEST",
+        publicKey: "TEST-",
         refreshToken: "refreshToken3",
-        profileImage: "https://imgur.com/u82U9TP",
+        profileImage: "https://i.imgur.com/O5CiS4X.png",
       },
       {
         name: "ONG Verde Esperança",
@@ -110,10 +110,10 @@ async function main() {
         description: "Projetos de reflorestamento.",
         email: "contato@verdeesperanca.org",
         expiresIn: 1,
-        accessToken: "token4",
+        accessToken: "TEST",
         publicKey: "publicKey4",
         refreshToken: "refreshToken4",
-        profileImage: "https://imgur.com/u82U9TP",
+        profileImage: "https://i.imgur.com/alpxpNE.png",
       },
     ],
     skipDuplicates: true,

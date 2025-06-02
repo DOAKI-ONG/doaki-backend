@@ -44,6 +44,7 @@ export default class OngRepository {
     }
     return ong;
   }
+  
   static async findAllActive() {
     const ongs =  await prisma.ong.findMany({
       select: {
