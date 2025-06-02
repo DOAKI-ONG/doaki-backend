@@ -57,19 +57,25 @@ model UserOng {
   status    Boolean   @default(true)
   user      User      @relation(fields: [userId], references: [id_user])
   ong       Ong       @relation(fields: [ongId], references: [id_ong])
+
   @@unique([userId, ongId])
 }
 
 model Donation {
-  id        String    @id @default(cuid())
-  userId    String
-  ongId     String
-  amount    Float
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  user      User      @relation(fields: [userId], references: [id_user])
-  ong       Ong       @relation(fields: [ongId], references: [id_ong])
+  id           String    @id @default(cuid())
+  userId       String
+  ongId        String
+  amount       Float?
+  paymentMpId  Int?
+  status     String?
+  dataCreated String?
+  dataApproved String?
+  paymentMethod String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+  user         User      @relation(fields: [userId], references: [id_user])
+  ong          Ong       @relation(fields: [ongId], references: [id_ong])
 }
 
 enum Perfil {
