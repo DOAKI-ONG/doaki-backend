@@ -5,7 +5,7 @@ import { verifyAdminUserRole } from "@middlewares/verifyAdmin";
 import { editOngSchema, registerOngSchema } from "@schemas/Ong.schema";
 import OngController from "@controllers/OngController";
 import { OngRegisterError } from "@helpers/ong-errors/400/ongRegisterError";
-import { ZodError } from "zod";
+import { z, ZodError } from "zod";
 
 const OngPrivateRoutes = express.Router();
 
@@ -33,13 +33,7 @@ OngPrivateRoutes.get(
     await OngController.getAllOngs(req, res);
   }
 );
-OngPrivateRoutes.get(
-  "/users/getAll/",
-  checkToken,
-  async (req: Request, res: Response) => {
-    await OngController.getAllOngsForUsers(res);
-  }
-);
+
 OngPrivateRoutes.delete(
   "/delete/:ong_id",
   checkToken,
@@ -58,7 +52,7 @@ OngPrivateRoutes.patch(
     await OngController.editOng(validatedBody, req,  res);
   }
 );
-function validateSchema(req: Request, schema: any) {
+function validateSchema(req: Request, schema: z.ZodSchema) {
   const result = schema.safeParse(req.body);
   if (!result.success) {
     if (result.error instanceof ZodError) {
