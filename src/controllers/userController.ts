@@ -46,7 +46,7 @@ const  UserController =  {
     });
   },
   getUserById: async (req: Request, res: Response) => {
-    const { id } = res.locals.id;
+    const id = res.locals.id;
     const user = await UserRepository.findById(id);
     return res.status(200).json({
       user: { name: user.name, email: user.email, phone: user.phone },
