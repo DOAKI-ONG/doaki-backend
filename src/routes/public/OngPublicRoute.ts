@@ -8,3 +8,5 @@ const OngPublicRoutes = express.Router();
 OngPublicRoutes.get("/users/getAll/", async (req: Request, res: Response) => {
   await OngController.getAllOngsForUsers(res);
 });
+
+export default OngPublicRoutes;
