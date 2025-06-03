@@ -28,6 +28,7 @@ const UserController = {
     return res.status(201).json({
       message: "Usuário logado com sucesso",
       token: token,
+      profileImage: userExists.profileImage,
     });
   },
 
