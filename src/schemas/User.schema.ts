@@ -61,7 +61,11 @@ export const editUserSchema = z
       .max(11),
   })
   .partial()
-  .refine((data) => data.cpf && checkCpf(data.cpf) == true, {
-    message: "Invalid CPF",
-    path: ["cpf"],
-  });
+  .refine(
+    (data) =>
+      ((data.cpf !== undefined && data?.cpf !== "") && checkCpf(data.cpf) == true),
+    {
+      message: "Invalid CPF",
+      path: ["cpf"],
+    }
+  );
