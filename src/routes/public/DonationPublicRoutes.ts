@@ -1,3 +1,4 @@
+import DonationController from "@controllers/DonationController";
 import express from "express";
 
 const DonationPublicRoutes = express.Router();
