@@ -8,27 +8,11 @@ export default class DonationRepository {
         cnpj: cnpj,
       },
     });
-    const body = paymentData.paymentData;
-    const bodyPayment = {
-      token: body.token || undefined,
-      issuer_id: body.issuer_id || undefined,
-      payment_method_id: body.payment_method_id,
-      transaction_amount: parseFloat(body.transaction_amount),
-      installments: body.installments || undefined,
-      payer: {
-        email: body.payer.email,
-        identification: {
-          type: body.payer.identification.type,
-          number: body.payer.identification.number,
-        },
-      },
-    };
-
     if (!ongExists) {
       throw new Error("ONG not found");
     }
     const payment = createPaymentClient(ongExists?.accessToken!);
-    const paymentResponse = await payment.create({ body: bodyPayment });
+    const paymentResponse = await payment.create({ body: paymentData });
     const {
       id,
       status_detail,
