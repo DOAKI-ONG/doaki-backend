@@ -44,26 +44,33 @@ export const loginUserSchema = z.object({
 
 export const editUserSchema = z
   .object({
-    name: z.string().min(1, "Name is required"),
+    name: z.string().min(1, "Name is required").optional(),
     email: z
       .string()
       .min(1, "Email is required")
-      .email("Incorrect format for email"),
+      .email("Incorrect format for email")
+      .optional(),
     phone: z
       .string()
       .min(1, "Phone is required")
       .min(10, "Incorrect lenght for phone")
-      .max(15),
+      .max(15)
+      .optional(),
     cpf: z
       .string()
       .min(1, "CPF is required")
       .min(11, "Incorrect lenght for CPF")
-      .max(11),
+      .max(11)
+      .optional(),
+    profileImage: z.string().optional(),
   })
-  .partial()
   .refine(
-    (data) =>
-      ((data.cpf !== undefined && data?.cpf !== "") && checkCpf(data.cpf) == true),
+    (data) => {
+      if (!data.cpf || data.cpf.trim() === "") {
+        return true; 
+      }
+      return checkCpf(data.cpf) == true;
+    },
     {
       message: "Invalid CPF",
       path: ["cpf"],

@@ -77,14 +77,6 @@ export default class UserRepository {
     });
   }
   static async update(id: string, data: Partial<User>) {
-    const user = await prisma.user.findFirst({
-      where: {
-        id_user: id,
-      },
-    });
-    if (!user) {
-      throw new UserNotFoundError();
-    }
     return await prisma.user.update({
       where: {
         id_user: id,

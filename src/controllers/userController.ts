@@ -81,6 +81,7 @@ const UserController = {
         email: user.email,
         phone: user.phone,
         cpf: user.cpf,
+        profileImage: user.profileImage,
       },
     });
   },
