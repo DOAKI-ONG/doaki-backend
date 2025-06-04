@@ -13,7 +13,6 @@ export async function checkToken(
     res.status(401).json({ message: "Acesso negado" });
     return;
   }
-
   jsonwebtoken.verify(
     token,
     process.env.SECRET || "",

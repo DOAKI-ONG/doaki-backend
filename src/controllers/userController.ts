@@ -72,8 +72,8 @@ const UserController = {
   },
   editUser: async (body: Partial<User>, res: Response) => {
     const id = res.locals.id;
-    const user = await UserRepository.findById(id);
-    await UserRepository.update(id, body);
+    await UserRepository.findById(id);
+    const user = await UserRepository.update(id, body);
     return res.status(200).json({
       message: "Usuário atualizado com sucesso",
       user: {

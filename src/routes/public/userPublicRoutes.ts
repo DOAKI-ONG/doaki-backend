@@ -1,17 +1,20 @@
 import UserController from "@controllers/UserController";
 import { UserRegisterRequestError } from "@helpers/user-errors/400/userRegisterRequestError";
+import { ensureActiveUser } from "@middlewares/EnsureActive";
 import { loginUserSchema, registerUserSchema } from "@schemas/User.schema";
 import express from "express";
 import { Request, Response } from "express";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
 const UserPublicRoutes = express.Router();
 
-UserPublicRoutes.post("/login", async (req: Request, res: Response) => {
+
+
+UserPublicRoutes.post("/login", ensureActiveUser, async (req: Request, res: Response) => {
   const validatedBody = validateSchema(req, loginUserSchema);
   await UserController.loginUser(validatedBody, res);
 });
-UserPublicRoutes.post("/register", async (req: Request, res: Response) => {
+UserPublicRoutes.post("/register", ensureActiveUser, async (req: Request, res: Response) => {
   const validatedBody = validateSchema(req, registerUserSchema);
   await UserController.registerUser(validatedBody, res);
 });
@@ -19,7 +22,7 @@ UserPublicRoutes.post("/register", async (req: Request, res: Response) => {
 function validateSchema(req: Request, schema: z.ZodSchema) {
   const result = schema.safeParse(req.body);
   if (!result.success) {
-    if (result.error instanceof ZodError) {
+    if (result.error instanceof z.ZodError) {
       const error = result.error.errors[0];
       throw new UserRegisterRequestError(error.message);
     }
