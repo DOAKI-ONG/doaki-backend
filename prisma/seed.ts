@@ -68,7 +68,7 @@ async function main() {
         email: "contato@ongesperanca.org",
         expiresIn: 1,
         accessToken:
-          "TEST-3623357814451153-042315-b9859eaa9b4b4af7899c9be2e26a4012-1781626255",
+          "APP_USR-3623357814451153-042315-469046950538e5b9b474f8efb927611d-1781626255",
         publicKey: "TEST-0010af91-2b39-4f60-94c3-0ff946014348",
         refreshToken: "refreshToken1",
         profileImage: "https://i.imgur.com/8tyK8p2.png",
