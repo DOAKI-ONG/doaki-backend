@@ -14,7 +14,7 @@ UserPublicRoutes.post("/login", ensureActiveUser, async (req: Request, res: Resp
   const validatedBody = validateSchema(req, loginUserSchema);
   await UserController.loginUser(validatedBody, res);
 });
-UserPublicRoutes.post("/register", ensureActiveUser, async (req: Request, res: Response) => {
+UserPublicRoutes.post("/register", async (req: Request, res: Response) => {
   const validatedBody = validateSchema(req, registerUserSchema);
   await UserController.registerUser(validatedBody, res);
 });
