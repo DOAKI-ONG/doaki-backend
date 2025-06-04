@@ -66,7 +66,7 @@ model Donation {
   userId       String
   ongId        String
   amount       Float?
-  paymentMpId  Int?
+  paymentMpId  BigInt?
   status     String?
   dataCreated String?
   dataApproved String?
