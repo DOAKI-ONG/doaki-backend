@@ -1,5 +1,6 @@
 import { createPaymentClient } from "@lib/mercadopago";
 import { prisma } from "@lib/prisma";
+import { createDonationResponse } from "@services/payment/donationResponse";
 import { BodyPayment } from "src/entities/bodyPayment";
 
 export default class DonationRepository {
@@ -49,5 +50,43 @@ export default class DonationRepository {
       throw new Error("Failed to create donation");
     }
     return paymentCreated;
+  }
+  static async findAll() {
+    return await prisma.donation.findMany({
+      include: {
+        user: {
+          select: {
+            id_user: true,
+            name: true,
+            email: true,
+          },
+        },
+        ong: {
+          select: {
+            id_ong: true,
+            name: true,
+            cnpj: true,
+          },
+        },
+      },
+    });
+  }
+  static async findAllDonationsByUserId(id: string) {
+    const donation = await prisma.donation.findMany({
+      where: {
+        userId: id,
+      },
+      select: {
+        ongId: true,
+        amount: true,
+        paymentMethod: true,
+        createdAt: true,
+      },
+    });
+    if (!donation) {
+      return [];
+    }
+    const resBody = await createDonationResponse(donation);
+    return resBody;
   }
 }
