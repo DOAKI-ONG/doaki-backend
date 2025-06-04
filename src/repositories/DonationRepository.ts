@@ -1,5 +1,6 @@
 import { createPaymentClient } from "@lib/mercadopago";
 import { prisma } from "@lib/prisma";
+import { BodyPayment } from "src/entities/bodyPayment";
 
 export default class DonationRepository {
   static async create(cnpj: string, paymentData: any, idUser: string) {
@@ -7,12 +8,23 @@ export default class DonationRepository {
       where: {
         cnpj: cnpj,
       },
+    }); 
+    const userExists = await prisma.user.findUnique({
+      where: {
+        id_user: idUser,
+      },
     });
+
     if (!ongExists) {
       throw new Error("ONG not found");
     }
+    const bodyPayment = new BodyPayment(
+      paymentData,
+      userExists!,
+      ongExists!,
+    ).body;
     const payment = createPaymentClient(ongExists?.accessToken!);
-    const paymentResponse = await payment.create({ body: paymentData });
+    const paymentResponse = await payment.create({ body: bodyPayment  });
     const {
       id,
       status_detail,
