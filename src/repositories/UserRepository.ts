@@ -84,15 +84,5 @@ export default class UserRepository {
       data,
     });
   }
-  static async findAllDonationsById(id: string) {
-    const user = await prisma.user.findFirst({
-      where: {
-        id_user: id,
-      },
-      include: {
-        donation: true,
-      },
-    });
-    return user!.donation;
-  }
+  
 }
