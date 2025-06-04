@@ -6,12 +6,14 @@ import { verifyAdminUserRole } from "@middlewares/verifyAdmin";
 import { z, ZodError } from "zod";
 import { editUserSchema } from "@schemas/User.schema";
 import { UserEditRequestError } from "@helpers/user-errors/400/userEditRequestError";
-import { User } from "mercadopago";
+import { ensureActiveUser } from "@middlewares/EnsureActive";
+
 const UserPrivateRoutes = express.Router();
 
 UserPrivateRoutes.get(
   "/profile/",
   checkToken,
+  ensureActiveUser,
   async (req: Request, res: Response) => {
     await UserController.getUserById(req, res);
   }
@@ -20,6 +22,7 @@ UserPrivateRoutes.get(
   "/getAll",
   checkToken,
   verifyAdminUserRole,
+  ensureActiveUser,
   async (req: Request, res: Response) => {
     await UserController.getAllUsers(req, res);
   }
@@ -27,6 +30,7 @@ UserPrivateRoutes.get(
 UserPrivateRoutes.delete(
   "/delete",
   checkToken,
+  ensureActiveUser,
   async (req: Request, res: Response) => {
     await UserController.deleteUser(req, res);
   }
@@ -34,6 +38,7 @@ UserPrivateRoutes.delete(
 UserPrivateRoutes.patch(
   "/edit",
   checkToken,
+  ensureActiveUser,
   async (req: Request, res: Response) => {
     const validatedBody = validateSchema(req, editUserSchema);
     await UserController.editUser(validatedBody, res);
@@ -43,6 +48,7 @@ UserPrivateRoutes.patch(
 UserPrivateRoutes.get(
   "/donations/getAll",
   checkToken,
+  ensureActiveUser,
   async (req: Request, res: Response) => {
     await UserController.getAllDonationsByUserId(req, res);
   }
