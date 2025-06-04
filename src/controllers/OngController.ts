@@ -39,8 +39,8 @@ export default class OngController {
     });
   }
   static async getOngById(req: Request, res: Response) {
-    const { id } = res.locals.id;
-    const ong = await OngRepository.findById(id);
+    const { ong_id } = req.params;
+    const ong = await OngRepository.findById(ong_id);
     return res.status(200).json(ong);
   }
   static async getAllOngs(req: Request, res: Response) {

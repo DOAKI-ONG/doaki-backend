@@ -32,11 +32,8 @@ export default class OngRepository {
         updatedAt: true,
       },
       where: {
-        userOngs: {
-          some: {
-            userId: id,
-          },
-        },
+        id_ong: id,
+        status: true,
       },
     });
     if(!ong) {

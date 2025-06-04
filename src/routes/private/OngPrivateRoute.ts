@@ -18,8 +18,9 @@ OngPrivateRoutes.post(
     await OngController.registerOng(validatedBody, res);
   }
 );
+//Fazer middleware para saber se é admin da ong ou do sistema
 OngPrivateRoutes.get(
-  "/profile",
+  "/profile/:ong_id",
   checkToken,
   async (req: Request, res: Response) => {
     await OngController.getOngById(req, res);

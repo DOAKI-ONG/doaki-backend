@@ -45,14 +45,6 @@ UserPrivateRoutes.patch(
   }
 );
 
-UserPrivateRoutes.get(
-  "/donations/getAll",
-  checkToken,
-  ensureActiveUser,
-  async (req: Request, res: Response) => {
-    await UserController.getAllDonationsByUserId(req, res);
-  }
-);
 
 function validateSchema(req: Request, schema: z.ZodSchema) {
   const result = schema.safeParse(req.body);

@@ -16,4 +16,14 @@ DonationPrivateRoutes.post(
 );
 
 
+DonationPrivateRoutes.get(
+  "/user/getAll",
+  checkToken,
+  ensureActiveUser,
+  async (req: Request, res: Response) => {
+    await DonationController.getAllDonationsByUserId(req, res);
+  }
+);
+
+
 export default DonationPrivateRoutes;
