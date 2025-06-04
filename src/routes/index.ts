@@ -6,8 +6,8 @@ import DonationPrivateRoutes from "./private/DonationPrivateRoute";
 import OngPublicRoutes from "./public/OngPublicRoute";
 
 const router = express.Router();
-//falta colocar se o status do user for false...
-router.use("/users", UserPublicRoutes, UserPrivateRoutes);
-router.use("/ongs", OngPrivateRoutes, OngPublicRoutes);
-router.use("/donations", DonationPrivateRoutes);
+
+router.use("/user", UserPublicRoutes, UserPrivateRoutes);
+router.use("/ong", OngPrivateRoutes, OngPublicRoutes);
+router.use("/donation", DonationPrivateRoutes);
 export default router;

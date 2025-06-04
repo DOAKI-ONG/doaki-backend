@@ -85,6 +85,12 @@ const UserController = {
       },
     });
   },
+  getAllDonationsByUserId: async (req: Request, res: Response) => {
+    const userId = res.locals.id;
+    await UserRepository.findById(userId);
+    const donations = await UserRepository.findAllDonationsById(userId);
+    return res.status(200).json(donations);
+  },
 };
 
 export default UserController;
